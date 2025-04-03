@@ -31,6 +31,24 @@ def main():
             laser_list.extend(pepper.getFrontLaserValue())
             laser_list.extend(pepper.getLeftLaserValue())
 
+            if all(laser == 3.0 for laser in pepper.getRightLaserValue()):
+                print("RIGHT: Nothing detected")
+            else:
+                print("RIGHT: Detected")
+                pass
+
+            if all(laser == 3.0 for laser in pepper.getFrontLaserValue()):
+                print("FRONT: Nothing detected")
+            else:
+                print("FRONT: Detected")
+                pass
+
+            if all(laser == 3.0 for laser in pepper.getLeftLaserValue()):
+                print("LEFT: Nothing detected")
+            else:
+                print("LEFT: Detected")
+                pass
+
             if all(laser == 3.0 for laser in laser_list):
                 print("Nothing detected")
             else:

@@ -46,6 +46,23 @@ if __name__ == "__main__":
 
     try:
         while True:
+
+            for joint_parameter in joint_parameters:
+                robot.setAngles(
+                    joint_parameter[1],
+                    p.readUserDebugParameter(
+                        joint_parameter[0]), 1.0)
+
+            # Step the simulation
+            simulation_manager.stepSimulation(client)
+
+    except KeyboardInterrupt:
+        pass
+    finally:
+        simulation_manager.stopSimulation(client)
+
+    try:
+        while True:
             for joint_parameter in joint_parameters:
                 robot.setAngles(
                     joint_parameter[1],
@@ -58,3 +75,45 @@ if __name__ == "__main__":
         pass
     finally:
         simulation_manager.stopSimulation(client)
+
+
+class Morse:
+    pass
+
+
+def choose_word():
+    return "ahojda"
+
+
+def create_dict(word):
+    return {}
+
+
+with Morse() as simu:
+    letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
+               "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+    mistakes = 0
+    word = choose_word()
+    word_list = ["_" for _ in word]
+    word_dict = create_dict(word)
+    while True:
+        print(" ".join(word_list))
+        if mistakes >= 10:
+            print("Konec hry, prohral jsi, slovo bylo: " + word)
+            break
+        if "_" not in word_list:
+            print("Konec hry, vyhral jsi!")
+            break
+        letter = input("Hadej pismeno:")
+        if letter in letters:
+            letters.remove(letter)
+            if letter.upper() in word:
+                print("Pismeno " + letter.upper() + " se ve slove nachazi.")
+                for i in word_dict[letter.upper()]:
+                    word_list[i] = letter.upper()
+            else:
+                print("Pismeno " + letter.upper() + " se ve slove NEnachazi.")
+                mistakes += 1
+        else:
+            print("Pismeno " + letter.upper() + " bylo uz hadano.")
+            continue
